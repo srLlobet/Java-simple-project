@@ -1,8 +1,14 @@
+import Business.FitxerProva;
+import Persistence.ProvaCSV;
 import Presentation.Controller;
+import Presentation.Menu;
 
 public class Main {
     public static void main(String[] args) {
-        Controller controller = new Controller();
+        Menu menu = new Menu();
+        ProvaCSV provaCSV = new ProvaCSV();
+        FitxerProva fitxerProva = new FitxerProva(provaCSV);
+        Controller controller = new Controller(menu, fitxerProva);
         controller.iniciProves();
 
     }

@@ -1,5 +1,9 @@
 package Presentation;
 
+import Business.FitxerProva;
+import Business.Prova;
+
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -100,10 +104,11 @@ public class Menu {
         return null;
     }
 
-    public void menuTrialCreation(){
+    public int menuTrialCreation(){
         String opcio;
         boolean error = false;
         do {
+            //error = false;
             System.out.println();
             System.out.println("\t--- Trail types ---");
             System.out.println();
@@ -112,18 +117,56 @@ public class Menu {
             System.out.print("Enter the trial's type: ");
             opcio = scanner.nextLine();
             if(opcio.equals("1")){
-
+                return Integer.parseInt(opcio);
             }else{
                 System.out.println("Incorrect option, please choose a correct one!");
                 error = true;
             }
         }while (error);
+        return Integer.parseInt(opcio);
     }
 
     public void menuTrialsList(){
+        boolean error = false;
+        do{
+            System.out.println();
+            System.out.println("Here are the current trials, do you want to see more details or go back?");
+            System.out.println();
+        }while (error);
+    }
+
+    public int enterOption(int opcio){
+        boolean error;
+        String option;
+        do {
+            error = false;
+            System.out.println();
+            System.out.print("Enter an option: ");
+            option = scanner.nextLine();
+            try {
+                Integer.parseInt(option);
+                if (Integer.parseInt(option) < 1 || Integer.parseInt(option) > opcio){
+                    System.out.println("Incorrect option, enter a number between 1 and " + opcio);
+                    error = true;
+                }
+            }catch (NumberFormatException e){
+                System.out.println("Incorrect option, enter a number between 1 and " + opcio);
+                error = true;
+            }
+        }while (error);
+        return Integer.parseInt(option);
+    }
+
+    public void eliminacioProvaMenu(){
         System.out.println();
-        System.out.println("Here are the current trials, do you want to see more details or go back?");
+        System.out.println("Which trial do you want to delete?");
         System.out.println();
+    }
+
+    public void confirmacioEliminacio(){
+        System.out.print("Enter the trial's name for confirmation: ");
+        String nomProva = scanner.nextLine();
+
     }
 
     public void manageEditions(){
@@ -144,6 +187,41 @@ public class Menu {
     public void shuttingDown(){
         System.out.println();
         System.out.println("Shutting down...");
+    }
+
+    /**
+     * Mètode per entrar string. A més a més, comprova que no estigui buida
+     * @return
+     */
+    public String llegirString(){
+        boolean buit = false;
+        String string;
+            string = scanner.nextLine();
+            if (!string.isEmpty()){
+
+            }else{
+                buit = true;
+                System.out.println("Please enter a correct value!");
+            }
+        return string;
+    }
+
+    public int demanarProbabilitats(){
+        boolean error = false;
+            String string = scanner.nextLine();
+        int num = 0;
+        try{
+            num = Integer.parseInt(string);
+            if (num < 0 || num > 100){
+                System.out.println("Please enter a number between 0 and 100!");
+                error = true;
+            }
+                
+        }catch (NumberFormatException e){
+            System.out.println("Please enter a number between 0 and 100!");
+            error = true;
+        }
+        return num;
     }
 
 }
