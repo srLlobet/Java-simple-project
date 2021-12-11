@@ -8,6 +8,15 @@ public class Prova {
     private float probabilitatRevisio;
     private float probabilitatRebuig;
 
+    public Prova(String nomProva, String nomRevista, String quartil, float probabilitatArticle, float probabilitatRevisio, float probabilitatRebuig) {
+        this.nomProva = nomProva;
+        this.nomRevista = nomRevista;
+        this.quartil = quartil;
+        this.probabilitatArticle = probabilitatArticle;
+        this.probabilitatRevisio = probabilitatRevisio;
+        this.probabilitatRebuig = probabilitatRebuig;
+    }
+
     public String getNomProva() {
         return nomProva;
     }
