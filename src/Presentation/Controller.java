@@ -58,6 +58,9 @@ public class Controller {
      */
     public void gestioSubmenuProves(String opcioManage){
         switch (opcioManage){
+            /**
+             * Menú creació de proves
+             */
             case "a":
                 int opcioA = menu.menuTrialCreation();
                 if(opcioA == 1){
@@ -105,30 +108,64 @@ public class Controller {
 
                     fitxerProva.afegirProva(nomProva, nomRevista, quatille, accProb, revProb, rejProb);
                     System.out.println("The trial was created successfully!");
-                    menu.menuCompositor();
-
+                    gestioMenuCompositor(1);
                 }
                 break;
 
             case "b":
+                /**
+                 * Menú mostrar proves
+                 */
                 int opcioB;
                 int mostraProva;
+                boolean backB = false;
                     menu.menuTrialsList();
                     opcioB = fitxerProva.mostrarTotesProves();
                     mostraProva = menu.enterOption(opcioB);
-                    fitxerProva.mostraInformacioProva(mostraProva);
-                    menu.menuCompositor();
+                    if (mostraProva == opcioB){
+                        gestioMenuCompositor(1);
+                        backB = true;
+                    }else {
+                        fitxerProva.mostraInformacioProva(mostraProva);
+                    }
+                    if (!backB){
+                        gestioMenuCompositor(1);
+                    }
                 break;
 
+            /**
+             * Menú seleccionar i eliminar prova
+             */
             case "c":
+                String nomEliminar;
+                boolean found = false;
+                boolean back = false;
                 menu.eliminacioProvaMenu();
                 int opcioC = fitxerProva.mostrarTotesProves();
                 int eliminarProva = menu.enterOption(opcioC);
-                fitxerProva.eliminarProva(eliminarProva);
+                if (eliminarProva == opcioC){
+                    gestioMenuCompositor(1);
+                    back = true;
+                }
+                if (!back){
+                    do{
+                        nomEliminar = menu.confirmacioEliminacio();
+                        if(fitxerProva.eliminarProva(eliminarProva,nomEliminar)){
+                            gestioMenuCompositor(1);
+                            found = true;
+                        }else{
+                            found = false;
+                        }
+                    }while (!found);
+                }
+
                 break;
 
+            /**
+             * Opció de tornar al menú on triem controlar proves o edicions
+             */
             case "d":
-                int opcio = 0;
+                int opcio;
                 opcio = menu.menuCompositor();
                 gestioMenuCompositor(opcio);
                 break;

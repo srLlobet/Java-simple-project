@@ -104,6 +104,10 @@ public class Menu {
         return null;
     }
 
+    /**
+     * Menú per crear una prova
+     * @return Retornem l'opcio que ha triat l'usuari, en aquest cas sempre serà un 1
+     */
     public int menuTrialCreation(){
         String opcio;
         boolean error = false;
@@ -126,6 +130,9 @@ public class Menu {
         return Integer.parseInt(opcio);
     }
 
+    /**
+     * Capçelera de l'opcio de llistar les proves
+     */
     public void menuTrialsList(){
         boolean error = false;
         do{
@@ -135,6 +142,11 @@ public class Menu {
         }while (error);
     }
 
+    /**
+     * En els menus on primer mostrem una llista amb les opcins, invoquem aquest mètode, on ens controla que introduim una opcio correcte
+     * @param opcio numero d'opcions que hi ha
+     * @return Opció entrada per l'usuari
+     */
     public int enterOption(int opcio){
         boolean error;
         String option;
@@ -148,6 +160,9 @@ public class Menu {
                 if (Integer.parseInt(option) < 1 || Integer.parseInt(option) > opcio){
                     System.out.println("Incorrect option, enter a number between 1 and " + opcio);
                     error = true;
+                }
+                if (Integer.parseInt(option) == opcio){
+                    return Integer.parseInt(option);
                 }
             }catch (NumberFormatException e){
                 System.out.println("Incorrect option, enter a number between 1 and " + opcio);
@@ -163,10 +178,11 @@ public class Menu {
         System.out.println();
     }
 
-    public void confirmacioEliminacio(){
+    public String confirmacioEliminacio(){
         System.out.print("Enter the trial's name for confirmation: ");
-        String nomProva = scanner.nextLine();
+        String nomProva = llegirString();
 
+        return nomProva;
     }
 
     public void manageEditions(){

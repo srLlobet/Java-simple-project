@@ -73,4 +73,42 @@ public class ProvaCSV {
         }
     }
 
+    public void reescriureDades(){
+        File fileCSV = new File("assets/proves.csv");
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(fileCSV);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        StringBuilder liniaCSV = new StringBuilder();
+        for (Prova prova: proves) {
+            liniaCSV.append(prova.getNomProva());
+            liniaCSV.append(",");
+            liniaCSV.append(prova.getNomRevista());
+            liniaCSV.append(",");
+            liniaCSV.append(prova.getQuartil());
+            liniaCSV.append(",");
+            liniaCSV.append(prova.getProbabilitatArticle());
+            liniaCSV.append(",");
+            liniaCSV.append(prova.getProbabilitatRevisio());
+            liniaCSV.append(",");
+            liniaCSV.append(prova.getProbabilitatRebuig());
+            liniaCSV.append("\n");
+        }
+
+        try {
+            fileWriter.write(String.valueOf(liniaCSV));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("We can't save your information in our file!");
+        }
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
