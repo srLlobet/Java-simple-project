@@ -3,6 +3,9 @@ import Persistence.ProvaCSV;
 import Presentation.Controller;
 import Presentation.Menu;
 
+/**
+ * Autors Joan Llobet i Lluis Gumbau
+ */
 public class Main {
     public static void main(String[] args) {
         Menu menu = new Menu();

@@ -8,6 +8,10 @@ import java.util.ArrayList;
 public class ProvaCSV {
     ArrayList<Prova> proves = new ArrayList<Prova>();
 
+    /**
+     * Llegim les dades del fitxer csv i afegim el contingut a la llista de proves
+     * @return La llista amb les proves
+     */
     public ArrayList<Prova> llegirDades(){
         FileReader fileReader = null;
         try {
@@ -38,6 +42,15 @@ public class ProvaCSV {
         return proves;
     }
 
+    /**
+     * Afegim la prova separada per comes en el csv
+     * @param nomProva Nom de la prova
+     * @param nomRevista Nom de la revista
+     * @param quatille Numero del quartil
+     * @param accProb Probabilitat de ser acceptada
+     * @param revProb Probabilitat de ser revisada
+     * @param rejProb Probabilitat de ser rebutjada
+     */
     public void addProva(String nomProva, String nomRevista, String quatille, int accProb, int revProb, int rejProb){
         File fileCSV = new File("assets/proves.csv");
         FileWriter fileWriter = null;
@@ -73,6 +86,9 @@ public class ProvaCSV {
         }
     }
 
+    /**
+     * Reescriure el fitxer i la llista, així quan borrem una prova tornem a omplir el csv i la llista
+     */
     public void reescriureDades(){
         File fileCSV = new File("assets/proves.csv");
         FileWriter fileWriter = null;
@@ -83,7 +99,7 @@ public class ProvaCSV {
         }
 
         StringBuilder liniaCSV = new StringBuilder();
-        for (Prova prova: proves) {
+        for (Prova prova : proves) {
             liniaCSV.append(prova.getNomProva());
             liniaCSV.append(",");
             liniaCSV.append(prova.getNomRevista());

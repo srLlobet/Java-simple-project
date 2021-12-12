@@ -51,7 +51,7 @@ public class Menu {
      * @return Retornem l'opció escollida i la passem a enter.
      */
     public int menuCompositor(){
-        String option = null;
+        String option;
         boolean error = false;
 
         do{
@@ -73,7 +73,7 @@ public class Menu {
                     error = true;
                 }
         }while (error);
-        return 0;
+        return Integer.parseInt(option);
     }
 
     /**
@@ -185,16 +185,29 @@ public class Menu {
         return nomProva;
     }
 
-    public void manageEditions(){
-        System.out.println();
-        System.out.println("\ta) Create Edition");
-        System.out.println("\tb) List Editions");
-        System.out.println("\tc) Duplicate Edition");
-        System.out.println("\td) Delete Edition");
-        System.out.println();
-        System.out.println("\te) Back");
-        System.out.println();
-        System.out.print("Enter an option: ");
+    public String manageEditions(){
+        String opcio;
+        boolean error;
+        do {
+            error = false;
+            System.out.println();
+            System.out.println("\ta) Create Edition");
+            System.out.println("\tb) List Editions");
+            System.out.println("\tc) Duplicate Edition");
+            System.out.println("\td) Delete Edition");
+            System.out.println();
+            System.out.println("\te) Back");
+            System.out.println();
+            System.out.print("Enter an option: ");
+            opcio = scanner.nextLine();
+            if(opcio.equals("a") || opcio.equals("b") || opcio.equals("c") || opcio.equals("d") || opcio.equals("e")){
+                return opcio;
+            }else {
+                System.out.println("Incorrect option, please choose a correct one!");
+                error = true;
+            }
+        }while (error);
+        return opcio;
     }
 
     /**

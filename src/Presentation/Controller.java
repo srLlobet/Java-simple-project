@@ -44,7 +44,8 @@ public class Controller {
                 gestioSubmenuProves(opcioManage);
                 break;
             case 2:
-                menu.manageEditions();
+                String opcioEdicio = menu.manageEditions();
+                gestioSubmenuEdicions(opcioEdicio);
                 break;
             case 3:
                 menu.shuttingDown();
@@ -168,6 +169,32 @@ public class Controller {
                 int opcio;
                 opcio = menu.menuCompositor();
                 gestioMenuCompositor(opcio);
+                break;
+        }
+    }
+
+    /**
+     * Mètode que gestiona el menú de Manage Editions
+     * @param opcio Li passem per referència l'opcio seleccionada per l'usuari
+     */
+    public void gestioSubmenuEdicions(String opcio){
+        switch (opcio){
+            case "a":
+                break;
+
+            case  "b":
+                break;
+
+            case "c":
+                break;
+
+            case "d":
+                break;
+
+            case "e":
+                int opcioE;
+                opcioE = menu.menuCompositor();
+                gestioMenuCompositor(opcioE);
                 break;
         }
     }
