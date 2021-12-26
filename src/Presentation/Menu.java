@@ -4,6 +4,7 @@ import Business.FitxerProva;
 import Business.Prova;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -200,13 +201,13 @@ public class Menu {
             System.out.println();
             System.out.print("Enter an option: ");
             opcio = scanner.nextLine();
+
             if(opcio.equals("a") || opcio.equals("b") || opcio.equals("c") || opcio.equals("d") || opcio.equals("e")){
-                return opcio;
+                error = false;
             }else {
                 System.out.println("Incorrect option, please choose a correct one!");
-                error = true;
             }
-        }while (error);
+        } while (error);
         return opcio;
     }
 
@@ -251,6 +252,35 @@ public class Menu {
             error = true;
         }
         return num;
+    }
+
+    public void creaEdicio(){
+        int currentyear = Calendar.getInstance().get(Calendar.YEAR);
+        int year = 0;
+        int error;
+        do{
+            error = 0;
+            System.out.println("Enter the edition's year: ");
+            try{
+
+                year = scanner.nextInt();
+
+            } catch (InputMismatchException e){
+                System.out.println("Please enter a correct value!");
+                scanner.nextLine();
+                error = 1;
+
+            }
+
+            if(year < currentyear && error == 0){
+                System.out.println("Please enter a valid year");
+                scanner.nextLine();
+            }
+
+        }while(year < currentyear);
+
+
+
     }
 
 }

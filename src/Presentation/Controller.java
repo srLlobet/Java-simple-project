@@ -180,6 +180,7 @@ public class Controller {
     public void gestioSubmenuEdicions(String opcio){
         switch (opcio){
             case "a":
+                menu.creaEdicio();
                 break;
 
             case  "b":
