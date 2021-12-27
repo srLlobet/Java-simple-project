@@ -254,33 +254,6 @@ public class Menu {
         return num;
     }
 
-    public void creaEdicio(){
-        int currentyear = Calendar.getInstance().get(Calendar.YEAR);
-        int year = 0;
-        int error;
-        do{
-            error = 0;
-            System.out.println("Enter the edition's year: ");
-            try{
 
-                year = scanner.nextInt();
-
-            } catch (InputMismatchException e){
-                System.out.println("Please enter a correct value!");
-                scanner.nextLine();
-                error = 1;
-
-            }
-
-            if(year < currentyear && error == 0){
-                System.out.println("Please enter a valid year");
-                scanner.nextLine();
-            }
-
-        }while(year < currentyear);
-
-
-
-    }
 
 }

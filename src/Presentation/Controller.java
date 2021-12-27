@@ -1,6 +1,7 @@
 package Presentation;
 
 import Business.FitxerProva;
+import Business.GestioEdicions;
 
 /**
  * Classe controler. Controlem tots la lògica dels menus del programa.
@@ -178,9 +179,10 @@ public class Controller {
      * @param opcio Li passem per referència l'opcio seleccionada per l'usuari
      */
     public void gestioSubmenuEdicions(String opcio){
+        GestioEdicions edicions = new GestioEdicions();
         switch (opcio){
             case "a":
-                menu.creaEdicio();
+                    edicions.creaEdicio();
                 break;
 
             case  "b":
