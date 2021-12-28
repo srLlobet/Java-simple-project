@@ -22,6 +22,9 @@ public class FitxerProva {
         this.provaCSV = provaCSV;
     }
 
+    public FitxerProva(){
+    }
+
     /**
      * Mètode que afegeix una nova prova a la llista i al csv.
      * @param nomProva Nom de la prova

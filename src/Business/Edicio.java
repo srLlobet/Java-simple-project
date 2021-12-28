@@ -3,11 +3,17 @@ package Business;
 import java.util.ArrayList;
 
 public class Edicio {
-
     private Integer year;
     private Integer playerCount;
     private Integer trialCount;
     private ArrayList<Prova> trials;
+
+
+    public Edicio(Integer year, Integer playerCount, Integer trialCount) {
+        this.year = year;
+        this.playerCount = playerCount;
+        this.trialCount = trialCount;
+    }
 
     public Integer getYear() {
         return year;
