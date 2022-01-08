@@ -22,9 +22,6 @@ public class FitxerProva {
         this.provaCSV = provaCSV;
     }
 
-    public FitxerProva(){
-    }
-
     /**
      * Mètode que afegeix una nova prova a la llista i al csv.
      * @param nomProva Nom de la prova
@@ -40,16 +37,28 @@ public class FitxerProva {
     }
 
     /**
-     * Mètode on mostrem el nom de totes les proves que hi ha en la llista de proves
+     * Mètode on mostrem el nom de totes les proves que hi ha en la llista de proves més l'opcio de back
      * @return El número de opcions que mostra el menu, sumem 1 per l'opció back.
      */
-    public int mostrarTotesProves(){
+    public int mostrarTotesProvesB(){
         int i;
         for (i = 0; i < proves.size(); i++) {
             System.out.println(i+1 + ") " + proves.get(i).getNomProva());
         }
         System.out.println();
         System.out.println(i+1 + ") Back");
+        return i+1;
+    }
+
+    /**
+     * Mètode on mostrem el nom de totes les proves que hi ha en la llista de proves sense l'opcio de back
+     * @return El número de opcions que mostra el menu, sumem 1 per l'opció back.
+     */
+    public int mostrarTotesProves(){
+        int i;
+        for (i = 0; i < proves.size(); i++) {
+            System.out.println("\t" + (i+1) + ") " + proves.get(i).getNomProva());
+        }
         return i+1;
     }
 
@@ -81,4 +90,32 @@ public class FitxerProva {
             return false;
         }
     }
+
+    /**
+     * Mètode que comprova que el nom de la prova sigui únic
+     * @param prova nom de la prova que ha entrat l'usuari
+     * @return booleà que ens indica si hi ha una prova registrada amb el nom que li volem posar.
+     */
+    public boolean provaExistent(String prova){
+        boolean trobat = false;
+        for (int i = 0; i < proves.size(); i++) {
+            if(prova.equals(proves.get(i).getNomProva())){
+                System.out.println("The name of the trial is already in use! Please enter a new one.");
+                trobat = true;
+            }
+        }
+        return trobat;
+    }
+
+    /**
+     * Afegim a la edicio les proves que seleccionem en aquest metode
+     * @param numProves numero de la prova que hem seleccionat
+     * @param nomProves array list on guardem les proves seleccionades
+     * @return la llista amb les proves guardades
+     */
+    public ArrayList<String> nomProvaPickTrial(int numProves, ArrayList<String> nomProves){
+        nomProves.add(proves.get(numProves - 1).getNomProva());
+        return nomProves;
+    }
+
 }

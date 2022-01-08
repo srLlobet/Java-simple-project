@@ -1,7 +1,10 @@
 package Presentation;
 
+import Business.FitxerEdicio;
 import Business.FitxerProva;
-import Business.GestioEdicions;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Classe controler. Controlem tots la lògica dels menus del programa.
@@ -10,10 +13,12 @@ import Business.GestioEdicions;
 public class Controller {
     private Menu menu;
     private FitxerProva fitxerProva;
+    private FitxerEdicio fitxerEdicio;
 
-    public Controller(Menu menu, FitxerProva fitxerProva) {
+    public Controller(Menu menu, FitxerProva fitxerProva, FitxerEdicio fitxerEdicio) {
         this.menu = menu;
         this.fitxerProva = fitxerProva;
+        this.fitxerEdicio = fitxerEdicio;
     }
 
     /**
@@ -29,7 +34,8 @@ public class Controller {
                 break;
 
             case "B":
-                //menuconductor
+                menu.executaConductor();
+                gestioMenuConductor();
                 break;
         }
     }
@@ -72,10 +78,12 @@ public class Controller {
                     String quatille;
                     int accProb, revProb, rejProb;
                     boolean incorrect = false;
+                    boolean provaExistent = false;
                     do{
                         System.out.print("Enter the trial's name: ");
                         nomProva = menu.llegirString();
-                    }while (nomProva.isEmpty());
+                        provaExistent = fitxerProva.provaExistent(nomProva);
+                    }while (nomProva.isEmpty() || provaExistent);
                     do{
                         System.out.print("Enter the journal's name: ");
                         nomRevista = menu.llegirString();
@@ -122,7 +130,7 @@ public class Controller {
                 int mostraProva;
                 boolean backB = false;
                     menu.menuTrialsList();
-                    opcioB = fitxerProva.mostrarTotesProves();
+                    opcioB = fitxerProva.mostrarTotesProvesB();
                     mostraProva = menu.enterOption(opcioB);
                     if (mostraProva == opcioB){
                         gestioMenuCompositor(1);
@@ -143,7 +151,7 @@ public class Controller {
                 boolean found = false;
                 boolean back = false;
                 menu.eliminacioProvaMenu();
-                int opcioC = fitxerProva.mostrarTotesProves();
+                int opcioC = fitxerProva.mostrarTotesProvesB();
                 int eliminarProva = menu.enterOption(opcioC);
                 if (eliminarProva == opcioC){
                     gestioMenuCompositor(1);
@@ -179,19 +187,89 @@ public class Controller {
      * @param opcio Li passem per referència l'opcio seleccionada per l'usuari
      */
     public void gestioSubmenuEdicions(String opcio){
-        GestioEdicions edicions = new GestioEdicions();
         switch (opcio){
             case "a":
-                    edicions.creaEdicio();
+                int numProvaArray;
+                ArrayList<String> nomProves = new ArrayList<String>();
+                int anyEdicio;
+                boolean anyExistent;
+                do {
+                    anyEdicio = menu.demanarAnyEdicio();
+                    anyExistent = fitxerEdicio.anyEdicioExistent(anyEdicio);
+                }while (anyExistent);
+                System.out.println("This edition year is already in use! Please enter a new one.");
+                int numPlayers = menu.demanarNumPlayersEdicio();
+                int numProves = menu.demanarNumProves();
+                System.out.println("\t--- Trials ---");
+                int numeroProvesFitxer = fitxerProva.mostrarTotesProves();
+                for (int i = 0; i < numProves; i++) {
+                    numProvaArray = menu.pickTrials(numProves, i+1, numeroProvesFitxer);
+                    nomProves = fitxerProva.nomProvaPickTrial(numProvaArray, nomProves);
+                }
+                fitxerEdicio.afegirEdicio(anyEdicio, numPlayers, numProves, nomProves);
+                System.out.println();
+                System.out.println("The edition was created successfully!");
+                gestioMenuCompositor(2);
                 break;
 
             case  "b":
+                    menu.menuMostraEdicions();
+                    int opcions = fitxerEdicio.mostrarEdicionsB();
+                    int provaSelected = menu.enterOption(opcions);
+                    if (provaSelected == opcions){
+                        gestioMenuCompositor(2);
+                    }else {
+                        fitxerEdicio.mostrarInformacioEdicio(provaSelected);
+                        gestioMenuCompositor(2);
+                    }
                 break;
 
             case "c":
+                    menu.menuDuplicarEdicio();
+                    int options = fitxerEdicio.mostrarEdicionsB();
+                    int edicioDuplicar = menu.enterOption(options);
+                    if (edicioDuplicar == options){
+                        gestioMenuCompositor(2);
+                    }else{
+                        boolean anyTrobat = false;
+                        int nouAny;
+                        do {
+                            nouAny = menu.duplicarEdicioAny();
+                            anyTrobat = fitxerEdicio.anyEdicioExistent(nouAny);
+                        }while (anyTrobat);
+                        int nouNumJug = menu.duplicarEdicioPlayers();
+                        fitxerEdicio.duplicarEdicio(edicioDuplicar, nouAny, nouNumJug);
+                        System.out.println();
+                        System.out.println("The edition was cloned successfully!");
+                        gestioMenuCompositor(2);
+                    }
                 break;
 
             case "d":
+                    menu.menuEliminarEdicio();
+                    int optionD = fitxerEdicio.mostrarEdicionsB();
+                    int edicioEliminar = menu.enterOption(optionD);
+                    if (edicioEliminar == optionD){
+                        gestioMenuCompositor(2);
+                    }else{
+                        int anyVolemEliminar;
+                        boolean buscarAny;
+                        boolean trobatD;
+                        do {
+                            trobatD = false;
+                            anyVolemEliminar = menu.enterYearConfirmation();
+                            buscarAny = fitxerEdicio.buscarAnyEdicioConfirmar(edicioEliminar, anyVolemEliminar);
+                            if (buscarAny){
+                                fitxerEdicio.eliminarEdicio(edicioEliminar, anyVolemEliminar);
+                                System.out.println("The edition was successfully deleted.");
+                                gestioMenuCompositor(2);
+                            }else{
+                                System.out.println("The edition's years don't match! Please try again.");
+                                trobatD = true;
+                            }
+                        }while (trobatD);
+
+                    }
                 break;
 
             case "e":
@@ -201,4 +279,12 @@ public class Controller {
                 break;
         }
     }
+    public void gestioMenuConductor(){
+        int currentyear = Calendar.getInstance().get(Calendar.YEAR);
+        boolean exist = fitxerEdicio.anyEdicioExistent(currentyear);
+        if(!exist){
+            menu.noEdition(currentyear);
+        }
+    }
+
 }
