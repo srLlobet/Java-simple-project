@@ -8,7 +8,12 @@ public class FitxerEdicio {
     private ArrayList<Edicio> edicions;
     private EdicioCSV edicioCSV;
 
-   public FitxerEdicio(EdicioCSV edicioCSV){
+    public ArrayList<Edicio> getEdicions() {
+        return edicions;
+    }
+
+
+    public FitxerEdicio(EdicioCSV edicioCSV){
        this.edicions = new ArrayList<Edicio>();
        this.edicions = edicioCSV.llegirDades();
        this.edicioCSV = edicioCSV;
@@ -54,7 +59,14 @@ public class FitxerEdicio {
        }
    }
    public int returnPlayerCount(int numEdicio){
-       return edicions.get(numEdicio).getNombreJugadors();
+       int playerCount = 0;
+
+       for (int i = 0; i < edicions.size(); i++) {
+           if (numEdicio == edicions.get(i).getAnyEdicio()){
+               playerCount = edicions.get(i).getNombreJugadors();
+           }
+       }
+       return playerCount;
    }
 
     /**
@@ -108,9 +120,18 @@ public class FitxerEdicio {
      */
    public void eliminarEdicio(int opcio, int anyDelete){
         if (edicions.get(opcio - 1).getAnyEdicio() == anyDelete){
-            //System.out.println(edicions.get(opcio - 1).getAnyEdicio());
             edicions.remove(opcio - 1);
             edicioCSV.reescriureDades();
         }
    }
+   public Edicio getEdicio(int editionYear){
+       for (int i = 0; i < edicions.size(); i++) {
+           if (editionYear == edicions.get(i).getAnyEdicio()){
+               return edicions.get(i);
+           }
+       }
+       return null;
+   }
+
+
 }

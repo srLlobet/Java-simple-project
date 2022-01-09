@@ -2,6 +2,7 @@ package Presentation;
 
 import Business.FitxerEdicio;
 import Business.FitxerProva;
+import Business.Player;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -282,11 +283,16 @@ public class Controller {
     public void gestioMenuConductor(){
         int currentyear = Calendar.getInstance().get(Calendar.YEAR);
         boolean exist = fitxerEdicio.anyEdicioExistent(currentyear);
-        ArrayList<String> players = new ArrayList<>();
+        ArrayList<Player> players = new ArrayList<>();
         if(!exist){
             menu.noEdition(currentyear);
         }else {
+
             players = menu.askPlayers(fitxerEdicio.returnPlayerCount(currentyear), currentyear);
+
+            for (int i = 0; i < fitxerEdicio.getEdicio(currentyear).getNombreProves(); i++){
+                menu.trialStart(i+1, fitxerEdicio.getEdicio(currentyear).getLlistaProves().get(i));
+            }
         }
     }
 

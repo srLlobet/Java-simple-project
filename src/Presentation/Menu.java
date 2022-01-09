@@ -1,12 +1,12 @@
 package Presentation;
 
-import Business.FitxerEdicio;
-import Business.FitxerProva;
-import Business.Prova;
+
+import Business.Player;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.InputMismatchException;
+
 import java.util.Scanner;
 
 /**
@@ -486,20 +486,24 @@ public class Menu {
         System.out.println();
         System.out.println("Shutting down...");
     }
-    public ArrayList<String> askPlayers(int playerCount, int currentYear){
-        int incrementa = 0;
-        String playertmp;
-        ArrayList<String> players = new ArrayList<>();
+    public ArrayList<Player> askPlayers(int playerCount, int currentYear){
+        ArrayList<Player> players = new ArrayList<>();
+        Player playertmp = new Player();
+
         System.out.println("--- The Trials "+ currentYear + " ---");
         System.out.println();
-        for(int i = 0; i< playerCount; i++){
-            System.out.println("Enter the player's name (" + incrementa + "/" + i + "): ");
-            playertmp = scanner.nextLine();
+        for(int i = 1; i<= playerCount; i++){
+            System.out.println("Enter the player's name (" + i + "/" + playerCount + "): ");
+            playertmp.setName(scanner.nextLine());
+            playertmp.setPI(5);
             players.add(playertmp);
-            scanner.nextLine();
 
         }
         return players;
+    }
+
+    public void trialStart(int trialnum, String nomProva){
+        System.out.println("Trial #"+trialnum+ " - " + nomProva );
     }
 
 }

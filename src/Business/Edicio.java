@@ -19,31 +19,16 @@ public class Edicio {
         return anyEdicio;
     }
 
-    public void setAnyEdicio(int anyEdicio) {
-        this.anyEdicio = anyEdicio;
-    }
-
     public int getNombreJugadors() {
         return nombreJugadors;
-    }
-
-    public void setNombreJugadors(int nombreJugadors) {
-        this.nombreJugadors = nombreJugadors;
     }
 
     public int getNombreProves() {
         return nombreProves;
     }
 
-    public void setNombreProves(int nombreProves) {
-        this.nombreProves = nombreProves;
-    }
-
     public ArrayList<String> getLlistaProves() {
         return llistaProves;
     }
 
-    public void setLlistaProves(ArrayList<String> llistaProves) {
-        this.llistaProves = llistaProves;
-    }
 }
