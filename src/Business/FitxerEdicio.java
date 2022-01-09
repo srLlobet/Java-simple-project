@@ -53,6 +53,9 @@ public class FitxerEdicio {
            System.out.println("\t" + (j+1) + "- " + edicions.get(numEdicio - 1).getLlistaProves().get(j));
        }
    }
+   public int returnPlayerCount(int numEdicio){
+       return edicions.get(numEdicio).getNombreJugadors();
+   }
 
     /**
      * Mètode que comprova que l'any seleccionat per l'edició sigui unic, és a dir que no pugui escollir un any ja existent en el csv

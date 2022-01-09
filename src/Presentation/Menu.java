@@ -486,5 +486,20 @@ public class Menu {
         System.out.println();
         System.out.println("Shutting down...");
     }
+    public ArrayList<String> askPlayers(int playerCount, int currentYear){
+        int incrementa = 0;
+        String playertmp;
+        ArrayList<String> players = new ArrayList<>();
+        System.out.println("--- The Trials "+ currentYear + " ---");
+        System.out.println();
+        for(int i = 0; i< playerCount; i++){
+            System.out.println("Enter the player's name (" + incrementa + "/" + i + "): ");
+            playertmp = scanner.nextLine();
+            players.add(playertmp);
+            scanner.nextLine();
+
+        }
+        return players;
+    }
 
 }

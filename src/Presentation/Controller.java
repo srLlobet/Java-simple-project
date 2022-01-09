@@ -282,8 +282,11 @@ public class Controller {
     public void gestioMenuConductor(){
         int currentyear = Calendar.getInstance().get(Calendar.YEAR);
         boolean exist = fitxerEdicio.anyEdicioExistent(currentyear);
+        ArrayList<String> players = new ArrayList<>();
         if(!exist){
             menu.noEdition(currentyear);
+        }else {
+            players = menu.askPlayers(fitxerEdicio.returnPlayerCount(currentyear), currentyear);
         }
     }
 
