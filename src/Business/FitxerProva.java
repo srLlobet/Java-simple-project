@@ -118,4 +118,13 @@ public class FitxerProva {
         return nomProves;
     }
 
+    public Prova getProvaByName(String provaName){
+        for(Prova i : proves){
+            if(provaName.equals(i.getNomProva())){
+                return i;
+            }
+        }
+        return null;
+    }
+
 }

@@ -7,6 +7,7 @@ import Business.Player;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -486,24 +487,54 @@ public class Menu {
         System.out.println();
         System.out.println("Shutting down...");
     }
-    public ArrayList<Player> askPlayers(int playerCount, int currentYear){
-        ArrayList<Player> players = new ArrayList<>();
-        Player playertmp = new Player();
+    public ArrayList<Player> askPlayers(int playerCount, int currentYear, ArrayList<Player> players){
+
 
         System.out.println("--- The Trials "+ currentYear + " ---");
         System.out.println();
+
         for(int i = 1; i<= playerCount; i++){
+            Player playertmp = new Player();
             System.out.println("Enter the player's name (" + i + "/" + playerCount + "): ");
             playertmp.setName(scanner.nextLine());
             playertmp.setPI(5);
             players.add(playertmp);
-
         }
         return players;
     }
 
     public void trialStart(int trialnum, String nomProva){
         System.out.println("Trial #"+trialnum+ " - " + nomProva );
+        System.out.println();
+    }
+
+    public int keepExecuting(){
+        int yn = 1;
+        String answer;
+
+        System.out.println("Continue the execution? [yes/no]: ");
+        try{
+            answer = scanner.nextLine();
+            if(answer.equals("no")){
+                yn = 0;
+                return yn;
+            }
+        } catch (InputMismatchException e){
+            System.out.println("Wrong input, continuing...");
+        }
+        return yn;
+    }
+
+    public void shuttingDownSave(){
+        System.out.println();
+        System.out.println("Saving & shutting down...");
+    }
+
+    public void ending(int currentyear){
+        System.out.println();
+        System.out.println("THE TRIALS " + currentyear + " HAVE ENDED - PLAYERS WON");
+        System.out.println();
+        System.out.println("Shutting down...");
     }
 
 }

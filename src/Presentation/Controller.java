@@ -1,9 +1,9 @@
 package Presentation;
 
-import Business.FitxerEdicio;
-import Business.FitxerProva;
-import Business.Player;
+import Business.*;
+import Persistence.PlayersCSV;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -15,6 +15,9 @@ public class Controller {
     private Menu menu;
     private FitxerProva fitxerProva;
     private FitxerEdicio fitxerEdicio;
+    private PlayersCSV playersCSV;
+    private ArrayList<Player> players = new ArrayList<>();
+    private GestioProva prova = new GestioProva();
 
     public Controller(Menu menu, FitxerProva fitxerProva, FitxerEdicio fitxerEdicio) {
         this.menu = menu;
@@ -283,17 +286,41 @@ public class Controller {
     public void gestioMenuConductor(){
         int currentyear = Calendar.getInstance().get(Calendar.YEAR);
         boolean exist = fitxerEdicio.anyEdicioExistent(currentyear);
-        ArrayList<Player> players = new ArrayList<>();
+
         if(!exist){
             menu.noEdition(currentyear);
         }else {
 
-            players = menu.askPlayers(fitxerEdicio.returnPlayerCount(currentyear), currentyear);
 
-            for (int i = 0; i < fitxerEdicio.getEdicio(currentyear).getNombreProves(); i++){
-                menu.trialStart(i+1, fitxerEdicio.getEdicio(currentyear).getLlistaProves().get(i));
+            File file = new File("assets/players.csv");
+            if(file.length() == 0){
+                this.players = menu.askPlayers(fitxerEdicio.returnPlayerCount(currentyear), currentyear, players);
+                for (int i = 0; i < fitxerEdicio.getEdicio(currentyear).getNombreProves(); i++){
+                    menu.trialStart(i+1, fitxerEdicio.getEdicio(currentyear).getLlistaProves().get(i));
+                    this.players = prova.executaProves(fitxerProva.getProvaByName(fitxerEdicio.getEdicio(currentyear).getLlistaProves().get(i)), players);
+                    if(i == fitxerEdicio.getEdicio(currentyear).getNombreProves() - 1){
+                        menu.ending(currentyear);
+                    }else{
+                        int x = menu.keepExecuting();
+                        if(x == 0){
+                            menu.shuttingDownSave();
+                            //write to file
+                            break;
+
+                        }
+                    }
+                }
+            } else{
+                players = playersCSV.llegirDades(fitxerEdicio.returnPlayerCount(currentyear), players);
+                int numProva = playersCSV.llegirProva();
             }
+
         }
     }
+    /*public void gestioProves(){
+        menu.trialStart(i+1, fitxerEdicio.getEdicio(currentyear).getLlistaProves().get(i));
+        this.players = prova.executaProves(fitxerProva.getProvaByName(fitxerEdicio.getEdicio(currentyear).getLlistaProves().get(i)), players);
+    }*/
+
 
 }

@@ -41,8 +41,11 @@ public class Prova {
         return probabilitatRebuig;
     }
 
-    public void executaProves(){
+    public int getQuartilNum(String quartil){
 
+        int quartilnum = quartil.charAt(1) - '0';
+        return quartilnum;
     }
+
 
 }
